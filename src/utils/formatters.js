@@ -1,3 +1,9 @@
+export function allowOnlyNumeric(event) {
+  if (event.data && !/^[0-9.,]+$/.test(event.data)) {
+    event.preventDefault()
+  }
+}
+
 export function parseNum(s) {
   if (typeof s !== 'string') return Number(s) || 0
   const cleaned = s.replace(/\s/g, '').replace(',', '.')

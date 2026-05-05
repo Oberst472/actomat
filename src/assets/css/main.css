@@ -38,6 +38,15 @@ body {
   color: var(--color-cool-900);
 }
 
+[data-slot="labelWrapper"] [data-slot="label"] {
+  color: var(--color-cool-400);
+  font-weight: 300;
+}
+
+button:not(:disabled):hover {
+  cursor: pointer;
+}
+
 .preview-page {
   font-family: var(--font-sans);
 }

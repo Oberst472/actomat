@@ -8,9 +8,10 @@
       <UFormField label="Task ID" class="w-44 shrink-0">
         <UInput
           :model-value="task.id"
+          size="xl"
           placeholder="CORE-152"
           class="w-full"
-          :ui="{ base: 'font-mono tracking-tight' }"
+          :ui="{ base: 'font-mono font-light tracking-tight' }"
           @update:model-value="(v) => update('id', String(v).toUpperCase())"
         />
       </UFormField>
@@ -20,13 +21,12 @@
       <UFormField label="Hours" class="w-32 shrink-0">
         <UInput
           :model-value="task.hours"
-          type="number"
+          size="xl"
           inputmode="decimal"
-          step="0.5"
-          min="0"
-          placeholder="0.0"
+          placeholder="0,0"
           class="w-full"
-          :ui="{ base: 'text-right tabular-nums' }"
+          :ui="{ base: 'text-right tabular-nums font-light' }"
+          @beforeinput="allowOnlyNumeric"
           @update:model-value="(v) => update('hours', v)"
         >
           <template #trailing>
@@ -62,6 +62,8 @@
 </template>
 
 <script setup>
+import { allowOnlyNumeric } from '../utils/formatters.js'
+
 const props = defineProps({
   task: { type: Object, required: true },
   index: { type: Number, required: true },
