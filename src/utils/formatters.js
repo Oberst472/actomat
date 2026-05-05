@@ -1,29 +1,33 @@
-export function formatDateToDDMMYYYY(dateStr) {
-  if (!dateStr) return ''
-  const [year, month, day] = dateStr.split('-')
-  return `${day}.${month}.${year}`
+export function parseNum(s) {
+  if (typeof s !== 'string') return Number(s) || 0
+  const cleaned = s.replace(/\s/g, '').replace(',', '.')
+  const n = parseFloat(cleaned)
+  return Number.isFinite(n) ? n : 0
 }
 
-export function formatAgreementDate(dateStr) {
-  if (!dateStr) return ''
-  const date = new Date(dateStr + 'T00:00:00')
+export function fmtMoney(n) {
+  return (Number.isFinite(n) ? n : 0)
+    .toFixed(2)
+    .replace('.', ',')
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+}
+
+export function fmtHours(n) {
+  return (Number.isFinite(n) ? n : 0).toFixed(1).replace('.', ',')
+}
+
+export function formatDateToDDMMYYYY(iso) {
+  if (!iso) return '—'
+  const [y, m, d] = iso.split('-')
+  return `${d}.${m}.${y}`
+}
+
+export function formatAgreementDate(iso) {
+  if (!iso) return '—'
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ]
-  return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
-}
-
-export function formatCurrency(amount) {
-  const formatted = amount
-    .toFixed(2)
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-  return `${formatted} zl`
-}
-
-export function formatCurrencyPdf(amount) {
-  const formatted = amount
-    .toFixed(2)
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-  return `${formatted} zl`
+  const [y, m, d] = iso.split('-')
+  return `${months[Number(m) - 1]} ${Number(d)}, ${y}`
 }

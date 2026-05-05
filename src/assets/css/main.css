@@ -1,2 +1,43 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+@theme static {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Brand — indigo-violet from the design template (#5b5cf0 base) */
+  --color-brand-50:  #f6f7ff;
+  --color-brand-100: #eef0fe;
+  --color-brand-200: #e1e4fc;
+  --color-brand-300: #c5c8f9;
+  --color-brand-400: #8b8df4;
+  --color-brand-500: #5b5cf0;
+  --color-brand-600: #4d4ee8;
+  --color-brand-700: #4242d8;
+  --color-brand-800: #3a3bc4;
+  --color-brand-900: #2e2f9e;
+  --color-brand-950: #1c1d6b;
+
+  /* Neutrals — cool slate tuned to the design tokens (page/surface/sunken/border/muted/ink) */
+  --color-cool-50:  #fafbfc;
+  --color-cool-100: #f6f7f9;
+  --color-cool-200: #e4e7ec;
+  --color-cool-300: #c9cdd5;
+  --color-cool-400: #a3aab8;
+  --color-cool-500: #6b7484;
+  --color-cool-600: #4d5564;
+  --color-cool-700: #353c4b;
+  --color-cool-800: #252b39;
+  --color-cool-900: #1c2434;
+  --color-cool-950: #0f1420;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-cool-100);
+  color: var(--color-cool-900);
+}
+
+.preview-page {
+  font-family: var(--font-sans);
+}

@@ -7,7 +7,13 @@ export default defineConfig({
     vue(),
     ui({
       router: false,
-      colorMode: false
+      colorMode: false,
+      ui: {
+        colors: {
+          primary: 'brand',
+          neutral: 'cool'
+        }
+      }
     })
   ]
 })
