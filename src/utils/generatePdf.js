@@ -23,6 +23,17 @@ function parseOklch(value) {
   return { L, C, H, A }
 }
 
+function parseOklab(value) {
+  const m = value.match(/oklab\(\s*([^/\s]+)\s+([^/\s]+)\s+([^/\s)]+)(?:\s*\/\s*([^)\s]+))?\s*\)/i)
+  if (!m) return null
+  const L = parsePercent(m[1])
+  const a = parsePercent(m[2], 0.4)
+  const b = parsePercent(m[3], 0.4)
+  const A = m[4] ? parsePercent(m[4]) : 1
+  if (![L, a, b].every(Number.isFinite)) return null
+  return { L, a, b, A }
+}
+
 function oklabToLinearSrgb(L, a, b) {
   const l_ = L + 0.3963377774 * a + 0.2158037573 * b
   const m_ = L - 0.1055613458 * a - 0.0638541728 * b
@@ -43,9 +54,7 @@ function linearToSrgb(x) {
   return abs <= 0.0031308 ? 12.92 * x : sign * (1.055 * Math.pow(abs, 1 / 2.4) - 0.055)
 }
 
-function oklchToRgbString(L, C, H, A) {
-  const aLab = C * Math.cos((H * Math.PI) / 180)
-  const bLab = C * Math.sin((H * Math.PI) / 180)
+function labToRgbString(L, aLab, bLab, A) {
   const [lr, lg, lb] = oklabToLinearSrgb(L, aLab, bLab)
   const r = Math.max(0, Math.min(1, linearToSrgb(lr)))
   const g = Math.max(0, Math.min(1, linearToSrgb(lg)))
@@ -56,6 +65,12 @@ function oklchToRgbString(L, C, H, A) {
   return A < 1 ? `rgba(${R}, ${G}, ${B}, ${A})` : `rgb(${R}, ${G}, ${B})`
 }
 
+function oklchToRgbString(L, C, H, A) {
+  const aLab = C * Math.cos((H * Math.PI) / 180)
+  const bLab = C * Math.sin((H * Math.PI) / 180)
+  return labToRgbString(L, aLab, bLab, A)
+}
+
 function resolveColor(value) {
   if (!value) return value
   if (colorCache.has(value)) return colorCache.get(value)
@@ -63,6 +78,9 @@ function resolveColor(value) {
   if (/^oklch\(/i.test(value)) {
     const parsed = parseOklch(value)
     if (parsed) resolved = oklchToRgbString(parsed.L, parsed.C, parsed.H, parsed.A)
+  } else if (/^oklab\(/i.test(value)) {
+    const parsed = parseOklab(value)
+    if (parsed) resolved = labToRgbString(parsed.L, parsed.a, parsed.b, parsed.A)
   }
   colorCache.set(value, resolved)
   return resolved
