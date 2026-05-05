@@ -49,7 +49,7 @@ const PdfPreview = ({ data, summary, currency }) => {
       </p>
 
       {/* Hourly rate */}
-      <div className="flex items-baseline gap-3 text-[9px] text-slate-700 mb-5">
+      <div className="flex flex-col items-baseline gap-3 text-[9px] text-slate-700 mb-5">
         <span>Executor's hourly rate:</span>
         <span className="font-bold text-slate-900 tabular-nums">{fmtPLN(parsePLN(data.pricePerHour))} {currency}</span>
         <span className="text-slate-700">net per hour + VAT, as defined in the B2B service agreement.</span>

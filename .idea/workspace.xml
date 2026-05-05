@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c10adb52-ad92-4128-ad5b-02890c3a7cfe" name="Changes" comment="Refactor ActForm UI with live preview, brand theme, and multi-currency PDF support">
-      <change afterPath="$PROJECT_DIR$/src/design/act_preview.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/components.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ActForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ActForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TaskRow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskRow.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/composables/useActForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/composables/useActForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/formatters.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/formatters.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/generatePdf.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/generatePdf.js" afterDir="false" />
-    </list>
+    <list default="true" id="c10adb52-ad92-4128-ad5b-02890c3a7cfe" name="Changes" comment="Add oklab color support and fix preview layout with column stacking and zoom" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -116,7 +103,7 @@
       <option name="presentableId" value="Default" />
       <updated>1775664190190</updated>
       <workItem from="1775664191212" duration="2998000" />
-      <workItem from="1777963975159" duration="16566000" />
+      <workItem from="1777963975159" duration="21693000" />
     </task>
     <task id="LOCAL-00001" summary="Initialize &quot;Facturas&quot; project: add Vue 3 + Vite setup, Nuxt UI plugin, and acceptance act generator components">
       <option name="closed" value="true" />
@@ -134,7 +121,23 @@
       <option name="project" value="LOCAL" />
       <updated>1777968438203</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Rename project to &quot;aktomat&quot; and add canvas-based PDF export with oklch color resolution">
+      <option name="closed" value="true" />
+      <created>1777984284558</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1777984284558</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Add oklab color support and fix preview layout with column stacking and zoom">
+      <option name="closed" value="true" />
+      <created>1777991449355</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1777991449355</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,6 +146,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initialize &quot;Facturas&quot; project: add Vue 3 + Vite setup, Nuxt UI plugin, and acceptance act generator components" />
     <MESSAGE value="Refactor ActForm UI with live preview, brand theme, and multi-currency PDF support" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor ActForm UI with live preview, brand theme, and multi-currency PDF support" />
+    <MESSAGE value="Rename project to &quot;aktomat&quot; and add canvas-based PDF export with oklch color resolution" />
+    <MESSAGE value="Add oklab color support and fix preview layout with column stacking and zoom" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add oklab color support and fix preview layout with column stacking and zoom" />
   </component>
 </project>

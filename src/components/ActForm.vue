@@ -351,7 +351,7 @@
               </div>
               <span class="text-[11px] text-neutral-500">A4 · 1 page</span>
             </div>
-            <div class="rounded-xl bg-neutral-100 ring-1 ring-neutral-200 p-6 overflow-hidden">
+            <div class="rounded-xl bg-neutral-100 ring-1 ring-neutral-200 p-3 overflow-hidden" style="zoom: 0.5;">
               <PdfPreview :data="data" :summary="summary" :currency="settings.currency" :focused-field="focusedField" />
             </div>
             <div class="mt-3 flex items-center justify-center gap-1.5 text-xs text-neutral-500">
