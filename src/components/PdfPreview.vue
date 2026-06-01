@@ -19,7 +19,7 @@
       </div>
 
       <div class="mt-9">
-        <h1 class="text-[44px] leading-[1.15] text-slate-900 tracking-tight" style="font-family: Georgia, 'Times New Roman', serif;">Acceptance Act</h1>
+        <h1 class="text-[44px] leading-[1.15] text-slate-900 tracking-tight" style="font-family: sans-serif;">Acceptance Act</h1>
         <p class="mt-6 text-[15px] text-slate-600 max-w-prose">
           For services rendered under the B2B service agreement
           dated <span :class="['text-slate-900 font-medium', hl('agreementDate')]">{{ formatAgreementDate(data.agreementDate) }}</span>,
@@ -56,7 +56,7 @@
       <div class="flex items-end justify-between mb-5">
         <div>
           <div class="label-kicker">Services rendered</div>
-          <h2 class="mt-1 text-2xl text-slate-900" style="font-family: Georgia, 'Times New Roman', serif;">Description &amp; hours</h2>
+          <h2 class="mt-1 text-2xl text-slate-900" style="font-family: sans-serif;">Description &amp; hours</h2>
         </div>
         <div class="text-right text-sm text-slate-500">
           <span class="num">{{ visibleTasks.length }} task{{ visibleTasks.length === 1 ? '' : 's' }}</span>
@@ -104,7 +104,7 @@
     <section class="px-10 py-8 border-b border-slate-200 grid grid-cols-12 gap-8">
       <div class="col-span-12 md:col-span-5">
         <div class="label-kicker">Settlement</div>
-        <h2 class="mt-1 text-2xl text-slate-900" style="font-family: Georgia, 'Times New Roman', serif;">Amount due</h2>
+        <h2 class="mt-1 text-2xl text-slate-900" style="font-family: sans-serif;">Amount due</h2>
         <p class="mt-2 text-sm text-slate-500 max-w-xs">
           Calculated as {{ fmtHours(summary.hours) }}&nbsp;hours × {{ fmtMoney(summary.rate) }}&nbsp;{{ currency }}, with VAT applied per the agreement.
         </p>
@@ -210,7 +210,7 @@ const hl = (key) => (props.focusedField === key ? HIGHLIGHT_CLASS : '')
   position: absolute;
   right: -6px;
   top: -8px;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: sans-serif;
   font-style: italic;
   color: #94a3b8;
   transform: rotate(-6deg);

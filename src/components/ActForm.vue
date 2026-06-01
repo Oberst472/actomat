@@ -6,11 +6,11 @@
       <div class="flex items-end justify-between gap-4 mb-6 flex-wrap">
         <div>
           <div class="flex items-center gap-2 text-xs text-neutral-500 mb-1.5">
-            <span>Documents</span>
-            <UIcon name="i-lucide-chevron-right" class="size-3" />
-            <span>Acts</span>
-            <UIcon name="i-lucide-chevron-right" class="size-3" />
-            <span class="text-neutral-900">New</span>
+<!--            <span>Documents</span>-->
+<!--            <UIcon name="i-lucide-chevron-right" class="size-3" />-->
+<!--            <span>Acts</span>-->
+<!--            <UIcon name="i-lucide-chevron-right" class="size-3" />-->
+<!--            <span class="text-neutral-900">New</span>-->
           </div>
           <h1 class="text-[26px] font-semibold tracking-tight leading-tight">
             Acceptance Act Generator
@@ -205,9 +205,7 @@
               </CardHeader>
             </template>
 
-            <div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary-50 via-white to-amber-50 ring-1 ring-primary-100 p-4 mb-5">
-              <div class="absolute -right-8 -bottom-8 size-28 rounded-full bg-primary-200/40 blur-2xl pointer-events-none" />
-              <div class="absolute -left-10 -top-10 size-24 rounded-full bg-amber-200/30 blur-2xl pointer-events-none" />
+            <div class="relative overflow-hidden rounded-xl from-primary-50 via-white to-amber-50 ring-1 ring-primary-100 p-4 mb-5">
 
               <div class="relative flex items-center gap-4 flex-wrap">
                 <div class="size-11 rounded-xl bg-white ring-1 ring-primary-200 shadow-sm grid place-items-center shrink-0">

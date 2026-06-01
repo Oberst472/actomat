@@ -100,14 +100,14 @@ export function useActForm() {
 
   function distributeHours(total, n) {
     if (n <= 0) return []
-    if (n === 1) return [Math.round(total * 10) / 10]
+    const whole = Math.round(total)
+    if (n === 1) return [whole]
     const weights = Array.from({ length: n }, () => 0.5 + Math.random())
     const sum = weights.reduce((a, b) => a + b, 0)
-    const hours = weights.map((w) => Math.round((total * w / sum) * 10) / 10)
+    const hours = weights.map((w) => Math.max(1, Math.round((whole * w) / sum)))
     const summed = hours.reduce((a, b) => a + b, 0)
-    const diff = Math.round((total - summed) * 10) / 10
-    hours[hours.length - 1] = Math.round((hours[hours.length - 1] + diff) * 10) / 10
-    return hours.map((h) => (h < 0.1 ? 0.1 : h))
+    hours[hours.length - 1] = Math.max(1, hours[hours.length - 1] + (whole - summed))
+    return hours
   }
 
   function redistributeHours() {
