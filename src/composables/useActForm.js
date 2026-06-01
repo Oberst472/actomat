@@ -1,4 +1,4 @@
-import { reactive, computed, watch } from 'vue'
+import { reactive, computed, watch, ref } from 'vue'
 import { parseNum } from '../utils/formatters.js'
 
 export function useActForm() {
@@ -28,6 +28,29 @@ export function useActForm() {
 
   const STORAGE_KEY = 'aktomat:actForm'
 
+  // Which fields belong to each form section (i.e. each "Save data" button).
+  // Lets us flag dirtiness per section so only the edited block lights up.
+  const SECTIONS = {
+    personal: { data: ['email', 'fullName'] },
+    act: { data: ['actNumber', 'actDate', 'agreementDate'] },
+    pricing: { data: ['pricePerHour', 'netAmount', 'hoursPerMonth'], settings: ['currency', 'vatRate'] },
+    tasks: { data: ['taskIdPrefix', 'tasks'] }
+  }
+
+  // Parsed snapshot of the data+settings currently persisted in localStorage.
+  // Per-section dirtiness compares the live form against this.
+  const savedState = ref(null)
+  // Whether the form was ever persisted (storage existed on load, or a save
+  // succeeded). Lets us distinguish "Saved" from "Nothing to save".
+  const hasSaved = ref(false)
+
+  function snapshot() {
+    return {
+      data: { ...data, tasks: data.tasks.map((t) => ({ ...t })) },
+      settings: { ...settings }
+    }
+  }
+
   function loadFromStorage() {
     if (typeof window === 'undefined') return
     try {
@@ -37,6 +60,7 @@ export function useActForm() {
       if (parsed && typeof parsed === 'object') {
         if (parsed.data) Object.assign(data, parsed.data)
         if (parsed.settings) Object.assign(settings, parsed.settings)
+        hasSaved.value = true
       }
     } catch {}
   }
@@ -44,11 +68,10 @@ export function useActForm() {
   function saveToStorage() {
     if (typeof window === 'undefined') return false
     try {
-      const payload = {
-        data: { ...data, tasks: data.tasks.map((t) => ({ ...t })) },
-        settings: { ...settings }
-      }
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(payload))
+      const snap = snapshot()
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(snap))
+      savedState.value = snap
+      hasSaved.value = true
       return true
     } catch {
       return false
@@ -56,6 +79,28 @@ export function useActForm() {
   }
 
   loadFromStorage()
+  // Baseline: whatever is in the form right after load is considered "saved",
+  // so a section only becomes dirty once the user changes one of its fields.
+  savedState.value = snapshot()
+
+  const eq = (a, b) => JSON.stringify(a) !== JSON.stringify(b)
+
+  function sectionDirty(name) {
+    const saved = savedState.value
+    if (!saved) return false
+    const def = SECTIONS[name]
+    if ((def.data || []).some((k) => eq(data[k], saved.data[k]))) return true
+    if ((def.settings || []).some((k) => eq(settings[k], saved.settings[k]))) return true
+    return false
+  }
+
+  // Per-section dirty flags, e.g. dirty.value.personal — drives each button.
+  const dirty = computed(() => ({
+    personal: sectionDirty('personal'),
+    act: sectionDirty('act'),
+    pricing: sectionDirty('pricing'),
+    tasks: sectionDirty('tasks')
+  }))
 
   const currencyOptions = [
     { label: 'EUR (€)', value: 'EUR' },
@@ -121,5 +166,5 @@ export function useActForm() {
 
   watch(() => data.hoursPerMonth, redistributeHours)
 
-  return { data, settings, currencyOptions, vatOptions, summary, completion, updateTask, removeTask, addTask, redistributeHours, saveToStorage }
+  return { data, settings, currencyOptions, vatOptions, summary, completion, updateTask, removeTask, addTask, redistributeHours, saveToStorage, dirty, hasSaved }
 }

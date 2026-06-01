@@ -1,7 +1,7 @@
 <template>
   <div :class="['group first:pt-0 last:pb-0', dense ? 'py-3' : 'py-4']">
     <div class="flex items-end gap-3">
-      <div class="size-7 shrink-0 grid place-items-center rounded-md bg-neutral-50 ring-1 ring-neutral-200 text-neutral-500 text-[11px] font-mono tabular-nums mb-0.5">
+      <div class="size-10 shrink-0 grid place-items-center rounded-md bg-neutral-50 ring-1 ring-neutral-200 text-neutral-500 text-[11px] font-mono tabular-nums">
         {{ String(index + 1).padStart(2, '0') }}
       </div>
 
@@ -38,16 +38,15 @@
       <UButton
         icon="i-lucide-trash-2"
         color="error"
-        variant="ghost"
+        variant="outline"
         :disabled="!canRemove"
         square
-        size="md"
-        class="mb-0.5"
+        class="size-10 shrink-0 justify-center"
         @click="$emit('remove')"
       />
     </div>
 
-    <div class="mt-3 pl-10">
+    <div class="mt-3">
       <UFormField label="Description">
         <UTextarea
           :model-value="task.description"

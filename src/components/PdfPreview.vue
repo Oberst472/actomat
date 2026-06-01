@@ -43,10 +43,12 @@
         <p>
           The services were rendered on a due and timely basis. The Parties have no further claims against each other.
         </p>
-        <div class="mt-5 rounded-xl border border-slate-200 bg-slate-50/60 px-4 text-sm" style="height: 48px; line-height: 48px;">
-          <span class="text-slate-500" style="line-height: 48px;">Executor's hourly rate</span>
-          <span :class="['mx-2 text-slate-900 font-semibold num whitespace-nowrap', hl('pricePerHour'), hl('currency')]" style="line-height: 48px;">{{ fmtMoney(parseNum(data.pricePerHour)) }} {{ currency }}</span>
-          <span class="text-slate-500" style="line-height: 48px;">net / hour&nbsp;+&nbsp;VAT</span>
+        <div class="mt-5 rounded-xl border border-slate-200 bg-slate-50/60 px-4 text-sm table w-full" style="height: 48px;">
+          <div class="table-cell align-middle">
+            <span class="text-slate-500">Executor's hourly rate</span>
+            <span :class="['mx-2 text-slate-900 font-semibold num whitespace-nowrap', hl('pricePerHour'), hl('currency')]">{{ fmtMoney(parseNum(data.pricePerHour)) }} {{ currency }}</span>
+            <span class="text-slate-500">net / hour&nbsp;+&nbsp;VAT</span>
+          </div>
         </div>
       </div>
     </section>
@@ -94,9 +96,9 @@
       </ol>
 
       <!-- total -->
-      <div :class="['mt-5 rounded-xl border border-slate-200 bg-slate-50 px-5', hl('hoursPerMonth')]" style="height: 64px; line-height: 64px;">
-        <span class="text-sm tracking-wide uppercase text-slate-500" style="line-height: 64px;">Total hours</span>
-        <span class="text-2xl font-semibold num text-slate-900" style="line-height: 64px; float: right;">{{ fmtHours(summary.hours) }}</span>
+      <div :class="['mt-5 rounded-xl border border-slate-200 bg-slate-50 px-5 table w-full', hl('hoursPerMonth')]" style="height: 64px;">
+        <span class="table-cell align-middle text-sm tracking-wide uppercase text-slate-500">Total hours</span>
+        <span class="table-cell align-middle text-right text-2xl font-semibold num text-slate-900">{{ fmtHours(summary.hours) }}</span>
       </div>
     </section>
 
@@ -111,17 +113,17 @@
       </div>
       <div class="col-span-12 md:col-span-7">
         <dl class="rounded-xl border border-slate-200 overflow-hidden">
-          <div :class="['px-5 bg-white', hl('netAmount')]" style="height: 52px; line-height: 52px;">
-            <dt class="text-slate-600 text-sm" style="line-height: 52px;">Net amount</dt>
-            <dd :class="['num text-slate-900 font-medium whitespace-nowrap', hl('currency')]" style="line-height: 52px; float: right;">{{ fmtMoney(summary.net) }}&nbsp;{{ currency }}</dd>
+          <div :class="['px-5 bg-white table w-full', hl('netAmount')]" style="height: 52px;">
+            <dt class="table-cell align-middle text-slate-600 text-sm">Net amount</dt>
+            <dd :class="['table-cell align-middle text-right num text-slate-900 font-medium whitespace-nowrap', hl('currency')]">{{ fmtMoney(summary.net) }}&nbsp;{{ currency }}</dd>
           </div>
-          <div :class="['px-5 bg-white border-t border-slate-200', hl('vatRate')]" style="height: 52px; line-height: 52px;">
-            <dt class="text-slate-600 text-sm" style="line-height: 52px;">VAT</dt>
-            <dd :class="['num text-slate-900 font-medium whitespace-nowrap', hl('currency')]" style="line-height: 52px; float: right;">{{ fmtMoney(summary.vat) }}&nbsp;{{ currency }}</dd>
+          <div :class="['px-5 bg-white border-t border-slate-200 table w-full', hl('vatRate')]" style="height: 52px;">
+            <dt class="table-cell align-middle text-slate-600 text-sm">VAT</dt>
+            <dd :class="['table-cell align-middle text-right num text-slate-900 font-medium whitespace-nowrap', hl('currency')]">{{ fmtMoney(summary.vat) }}&nbsp;{{ currency }}</dd>
           </div>
-          <div class="px-5 border-t border-slate-200 bg-indigo-50/60" style="height: 64px; line-height: 64px;">
-            <dt class="text-[13px] uppercase tracking-[0.14em] text-indigo-700 font-medium whitespace-nowrap" style="line-height: 64px;">Total due</dt>
-            <dd :class="['num text-2xl font-semibold whitespace-nowrap', hl('currency')]" style="line-height: 64px; float: right; color: #4338ca;">{{ fmtMoney(summary.total) }}&nbsp;{{ currency }}</dd>
+          <div class="px-5 border-t border-slate-200 bg-indigo-50/60 table w-full" style="height: 64px;">
+            <dt class="table-cell align-middle text-[13px] uppercase tracking-[0.14em] text-indigo-700 font-medium whitespace-nowrap">Total due</dt>
+            <dd :class="['table-cell align-middle text-right num text-2xl font-semibold whitespace-nowrap', hl('currency')]" style="color: #4338ca;">{{ fmtMoney(summary.total) }}&nbsp;{{ currency }}</dd>
           </div>
         </dl>
       </div>

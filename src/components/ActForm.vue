@@ -36,10 +36,10 @@
               <CardHeader eyebrow="Step 1" title="Personal Info">
                 <template #action>
                   <div class="flex items-center gap-3">
-                    <span class="inline-flex items-center gap-1.5 text-[11.5px] text-neutral-500">
-                      <UIcon name="i-lucide-info" class="size-3" /> Used as contractor on the act
-                    </span>
-                      <UButton icon="i-lucide-save" label="Save data" color="warning" size="sm" @click="handleSave" />                  </div>
+<!--                    <span class="inline-flex items-center gap-1.5 text-[11.5px] text-neutral-500">-->
+<!--                      <UIcon name="i-lucide-info" class="size-3" /> Used as contractor on the act-->
+<!--                    </span>-->
+                      <UButton v-bind="saveBtn('personal')" size="sm" @click="handleSave" />                  </div>
                 </template>
               </CardHeader>
             </template>
@@ -71,7 +71,7 @@
             <template #header>
               <CardHeader eyebrow="Step 2" title="Act Info">
                 <template #action>
-                    <UButton icon="i-lucide-save" label="Save data" color="warning" size="sm" @click="handleSave" />                </template>
+                    <UButton v-bind="saveBtn('act')" size="sm" @click="handleSave" />                </template>
               </CardHeader>
             </template>
 
@@ -110,7 +110,7 @@
             <template #header>
               <CardHeader eyebrow="Step 3" title="Pricing">
                 <template #action>
-                  <UButton icon="i-lucide-save" label="Save data" color="warning" size="sm" @click="handleSave" />
+                  <UButton v-bind="saveBtn('pricing')" size="sm" @click="handleSave" />
                 </template>
               </CardHeader>
             </template>
@@ -186,20 +186,14 @@
               <CardHeader eyebrow="Step 4" title="Tasks">
                 <template #action>
                   <div class="flex items-center gap-2">
-                    <UButton
-                      icon="i-lucide-shuffle"
-                      label="Reroll hours"
-                      color="neutral"
-                      variant="ghost"
-                      @click="redistributeHours"
-                    />
-                    <UButton
-                      icon="i-lucide-plus"
-                      label="Add Task"
-                      color="primary"
-                      variant="soft"
-                      @click="addTask"
-                    />
+                      <UButton
+                          icon="i-lucide-shuffle"
+                          label="Reroll hours"
+                          color="neutral"
+                          variant="ghost"
+                          @click="redistributeHours"
+                      />
+                    <UButton v-bind="saveBtn('tasks')" size="sm" @click="handleSave" />
                   </div>
                 </template>
               </CardHeader>
@@ -259,17 +253,13 @@
               />
             </div>
 
-            <div class="mt-4 flex items-center justify-between text-xs text-neutral-500">
-              <span>
-                {{ data.tasks.length }} task{{ data.tasks.length === 1 ? '' : 's' }} ·
-                {{ fmtHours(summary.hours) }} h total
-              </span>
+            <div class="mt-4 text-xs text-neutral-500">
               <UButton
-                icon="i-lucide-plus"
-                label="Add another"
+                label="Add task"
                 color="primary"
-                variant="link"
-                size="xs"
+                size="lg"
+                variant="outline"
+                block
                 @click="addTask"
               />
             </div>
@@ -360,7 +350,7 @@
       </div>
     </main>
 
-    <div ref="exportRef" aria-hidden="true" class="fixed -left-[10000px] top-0 pointer-events-none">
+    <div id="print-root" aria-hidden="true" class="fixed -left-[10000px] top-0 pointer-events-none">
       <PdfPreview :data="data" :summary="summary" :currency="settings.currency" />
     </div>
   </div>
@@ -375,9 +365,19 @@ import TaskRow from './TaskRow.vue'
 import PdfPreview from './PdfPreview.vue'
 import { useActForm } from '../composables/useActForm.js'
 import { fmtMoney, fmtHours, allowOnlyNumeric } from '../utils/formatters.js'
-import { generatePdf } from '../utils/generatePdf.js'
 
-const { data, settings, currencyOptions, vatOptions, summary, completion, updateTask, removeTask, addTask, redistributeHours, saveToStorage } = useActForm()
+const { data, settings, currencyOptions, vatOptions, summary, completion, updateTask, removeTask, addTask, redistributeHours, saveToStorage, dirty, hasSaved } = useActForm()
+
+// Props for a section's "Save data" button: an active warning button while
+// that section has unsaved changes, otherwise a disabled gray button.
+const saveBtn = (section) =>
+  dirty.value[section]
+    ? { label: 'Save data', icon: 'i-lucide-save', color: 'warning', variant: 'solid', disabled: false }
+    : hasSaved.value
+      ? { label: 'Saved', icon: 'i-lucide-check', color: 'neutral', variant: 'ghost', disabled: true }
+      : { label: 'Nothing to save', icon: 'i-lucide-check', color: 'neutral', variant: 'ghost', disabled: true }
+
+const anyDirty = computed(() => Object.values(dirty.value).some(Boolean))
 
 const dateModel = (key) =>
   computed({
@@ -397,7 +397,6 @@ const numericPattern = /^[0-9.,]*$/
 const numericError = (v) => (numericPattern.test(String(v ?? '')) ? undefined : 'Allow only numbers, dot and coma')
 
 const focusedField = ref(null)
-const exportRef = ref(null)
 const focusBindings = (key) => ({
   onFocusin: () => { focusedField.value = key },
   onFocusout: () => { focusedField.value = null }
@@ -420,25 +419,90 @@ const cardUi = computed(() => ({
 const toast = useToast()
 
 function handleSave() {
+  if (!anyDirty.value) return
   const ok = saveToStorage()
   toast.add(ok
     ? { title: 'Saved', description: 'Your act data has been stored locally.', icon: 'i-lucide-check', color: 'primary' }
     : { title: 'Save failed', description: 'Could not write to localStorage.', icon: 'i-lucide-triangle-alert', color: 'error' })
 }
 
-async function handleCreate() {
-  const root = exportRef.value
-  const page = root?.querySelector('.preview-page') || root
-  if (!page) return
-  await generatePdf({
-    element: page,
-    fileName: `acceptance-act-${data.actNumber || 'draft'}.pdf`
-  })
-  toast.add({
-    title: 'Act generated',
-    description: `Acceptance Act #${data.actNumber} · ${fmtMoney(summary.value.total)} ${settings.currency} ready to download.`,
-    icon: 'i-lucide-check',
-    color: 'primary'
-  })
+function handleCreate() {
+  // The browser's print dialog uses document.title as the default "Save as PDF" filename.
+  const prevTitle = document.title
+  document.title = `acceptance-act-${data.actNumber || 'draft'}`
+  const restore = () => {
+    document.title = prevTitle
+    window.removeEventListener('afterprint', restore)
+  }
+  window.addEventListener('afterprint', restore)
+  window.print()
 }
 </script>
+
+<!-- Global (non-scoped) print styles: native browser print → "Save as PDF" -->
+<style>
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  /* Whiten the app/page backgrounds — otherwise the body's gray fill
+     paints any page area not covered by the white document. */
+  html,
+  body,
+  #app,
+  #app > .min-h-screen {
+    background: #ffffff !important;
+    min-height: 0 !important;
+  }
+
+  /* Remove the on-screen chrome from layout entirely, so it adds no extra
+     (gray) pages. Also drop any body-level teleported overlays/toasts. */
+  #app > .min-h-screen > header,
+  #app > .min-h-screen > main,
+  body > *:not(#app) {
+    display: none !important;
+  }
+
+  /* The exported document is now the only flowing content; in normal flow
+     it alone defines the printed page count. */
+  #print-root {
+    position: static !important;
+    inset: auto !important;
+    width: 100% !important;
+    pointer-events: auto !important;
+  }
+
+  /* The on-screen card chrome shouldn't print; let the page own the framing. */
+  #print-root .preview-page {
+    width: 100% !important;
+    max-width: 100% !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* Keep background tints (slate-50 rows, indigo total) in the PDF. */
+  html,
+  body,
+  #print-root,
+  #print-root * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Multi-page hygiene: don't slice a row, box, or signature across a page break. */
+  #print-root ol > li,
+  #print-root dl,
+  #print-root header,
+  #print-root .grid > div {
+    break-inside: avoid;
+  }
+
+  #print-root h1,
+  #print-root h2 {
+    break-after: avoid;
+  }
+}
+</style>

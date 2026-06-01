@@ -4,18 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c10adb52-ad92-4128-ad5b-02890c3a7cfe" name="Changes" comment="Add oklab color support and fix preview layout with column stacking and zoom">
+    <list default="true" id="c10adb52-ad92-4128-ad5b-02890c3a7cfe" name="Changes" comment="Remove obsolete design prototypes and clean up header/preview UI">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/ActForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ActForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AppHeader.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AppHeader.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/PdfPreview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PdfPreview.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskRow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskRow.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/composables/useActForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/composables/useActForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/design/Acceptance Act Generator.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/design/act_preview.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/design/app.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/design/main.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/design/tasks.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/design/tweaks-panel.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/generatePdf.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +115,7 @@
       <updated>1775664190190</updated>
       <workItem from="1775664191212" duration="2998000" />
       <workItem from="1777963975159" duration="22364000" />
-      <workItem from="1780307175242" duration="1364000" />
+      <workItem from="1780307175242" duration="9749000" />
     </task>
     <task id="LOCAL-00001" summary="Initialize &quot;Facturas&quot; project: add Vue 3 + Vite setup, Nuxt UI plugin, and acceptance act generator components">
       <option name="closed" value="true" />
@@ -158,7 +157,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778052612000</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Remove obsolete design prototypes and clean up header/preview UI">
+      <option name="closed" value="true" />
+      <created>1780308561385</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1780308561385</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -169,6 +176,7 @@
     <MESSAGE value="Refactor ActForm UI with live preview, brand theme, and multi-currency PDF support" />
     <MESSAGE value="Rename project to &quot;aktomat&quot; and add canvas-based PDF export with oklch color resolution" />
     <MESSAGE value="Add oklab color support and fix preview layout with column stacking and zoom" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add oklab color support and fix preview layout with column stacking and zoom" />
+    <MESSAGE value="Remove obsolete design prototypes and clean up header/preview UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove obsolete design prototypes and clean up header/preview UI" />
   </component>
 </project>
