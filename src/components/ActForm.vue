@@ -302,10 +302,9 @@
                 </span>
               </div>
               <div class="grow" />
-              <UButton icon="i-lucide-file-text" label="Save draft" color="neutral" variant="outline" size="lg"/>
               <UButton
                 icon="i-lucide-download"
-                label="Create Act"
+                label="Create and download pdf"
                 color="primary"
                 size="lg"
                 :ui="{ label: 'text-white', leadingIcon: 'text-white' }"
