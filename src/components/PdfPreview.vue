@@ -1,7 +1,6 @@
 <template>
   <article class="preview-page paper rounded-2xl border border-slate-200 shadow-[0_1px_0_rgba(15,23,42,0.04),0_24px_64px_-32px_rgba(15,23,42,0.18)] overflow-hidden bg-white text-slate-900 mx-auto" style="font-family: Helvetica, Arial, sans-serif;">
 
-    <!-- HEADER -->
     <header class="px-10 pt-10 pb-8 border-b border-slate-200">
       <div class="flex items-start justify-between gap-6">
         <div>
@@ -28,7 +27,6 @@
       </div>
     </header>
 
-    <!-- LEGAL BODY -->
     <section class="px-10 py-8 border-b border-slate-200 grid grid-cols-12 gap-8">
       <div class="col-span-12 md:col-span-3">
         <div class="label-kicker">Statement</div>
@@ -53,7 +51,6 @@
       </div>
     </section>
 
-    <!-- SERVICES TABLE -->
     <section class="px-10 py-8 border-b border-slate-200">
       <div class="flex items-end justify-between mb-5">
         <div>
@@ -65,7 +62,6 @@
         </div>
       </div>
 
-      <!-- table head -->
       <div class="grid grid-cols-12 gap-4 px-4 pb-3 border-b border-slate-200 label-kicker">
         <div class="col-span-1">#</div>
         <div class="col-span-2">Task ID</div>
@@ -73,7 +69,6 @@
         <div class="col-span-2 text-right">Hours</div>
       </div>
 
-      <!-- rows -->
       <ol class="row-sep text-[14.5px]">
         <li v-if="visibleTasks.length === 0" class="px-4 py-6 text-center text-slate-400 italic">
           No tasks added yet
@@ -95,14 +90,12 @@
         </li>
       </ol>
 
-      <!-- total -->
       <div :class="['mt-5 rounded-xl border border-slate-200 bg-slate-50 px-5 table w-full', hl('hoursPerMonth')]" style="height: 64px;">
         <span class="table-cell align-middle text-sm tracking-wide uppercase text-slate-500">Total hours</span>
         <span class="table-cell align-middle text-right text-2xl font-semibold num text-slate-900">{{ fmtHours(summary.hours) }}</span>
       </div>
     </section>
 
-    <!-- AMOUNTS -->
     <section class="px-10 py-8 border-b border-slate-200 grid grid-cols-12 gap-8">
       <div class="col-span-12 md:col-span-5">
         <div class="label-kicker">Settlement</div>
@@ -129,16 +122,13 @@
       </div>
     </section>
 
-    <!-- SIGNATURES -->
     <section class="px-10 pt-8 pb-10">
       <div class="grid grid-cols-2 gap-10">
-        <!-- client -->
         <div>
           <div class="label-kicker">Client</div>
           <div class="mt-3 h-[88px] rounded-lg border border-slate-200 bg-white relative overflow-hidden"></div>
         </div>
 
-        <!-- executor -->
         <div class="relative">
           <div class="label-kicker">Executor</div>
           <div class="mt-3 h-[88px] rounded-lg border border-slate-200 bg-white relative overflow-hidden"></div>
@@ -149,7 +139,6 @@
         </div>
       </div>
 
-      <!-- footer meta -->
       <div class="mt-10 pt-5 border-t border-slate-200 text-[12px] text-slate-500">
         <div class="whitespace-nowrap">
           Acceptance Act <span :class="hl('actNumber')">#{{ data.actNumber || '—' }}</span> · B2B service agreement of <span :class="['num', hl('agreementDate')]">{{ formatDateToDDMMYYYY(data.agreementDate) }}</span>
@@ -206,21 +195,5 @@ const hl = (key) => (props.focusedField === key ? HIGHLIGHT_CLASS : '')
 
 .row-sep > * + * {
   border-top: 1px solid #e2e8f0;
-}
-
-.signed-stamp {
-  position: absolute;
-  right: -6px;
-  top: -8px;
-  font-family: sans-serif;
-  font-style: italic;
-  color: #94a3b8;
-  transform: rotate(-6deg);
-  font-size: 13px;
-}
-
-.sig svg {
-  height: 56px;
-  width: auto;
 }
 </style>

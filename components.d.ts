@@ -17,7 +17,6 @@ declare module 'vue' {
     PdfPreview: typeof import('./src/components/PdfPreview.vue')['default']
     TaskRow: typeof import('./src/components/TaskRow.vue')['default']
     UApp: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/App.vue')['default']
-    UAvatar: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Avatar.vue')['default']
     UButton: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Button.vue')['default']
     UCalendar: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Calendar.vue')['default']
     UCard: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Card.vue')['default']
@@ -26,11 +25,9 @@ declare module 'vue' {
     UInput: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Input.vue')['default']
     UInputDate: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/InputDate.vue')['default']
     UInputNumber: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/InputNumber.vue')['default']
-    UKbd: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Kbd.vue')['default']
     UPopover: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Popover.vue')['default']
     UProgress: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Progress.vue')['default']
     URadioGroup: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/RadioGroup.vue')['default']
-    USelect: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Select.vue')['default']
     UTextarea: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Textarea.vue')['default']
   }
 }

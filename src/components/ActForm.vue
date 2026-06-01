@@ -5,13 +5,6 @@
     <main class="max-w-[1280px] mx-auto px-6 py-8">
       <div class="flex items-end justify-between gap-4 mb-6 flex-wrap">
         <div>
-          <div class="flex items-center gap-2 text-xs text-neutral-500 mb-1.5">
-<!--            <span>Documents</span>-->
-<!--            <UIcon name="i-lucide-chevron-right" class="size-3" />-->
-<!--            <span>Acts</span>-->
-<!--            <UIcon name="i-lucide-chevron-right" class="size-3" />-->
-<!--            <span class="text-neutral-900">New</span>-->
-          </div>
           <h1 class="text-[26px] font-semibold tracking-tight leading-tight">
             Acceptance Act Generator
           </h1>
@@ -36,10 +29,8 @@
               <CardHeader eyebrow="Step 1" title="Personal Info">
                 <template #action>
                   <div class="flex items-center gap-3">
-<!--                    <span class="inline-flex items-center gap-1.5 text-[11.5px] text-neutral-500">-->
-<!--                      <UIcon name="i-lucide-info" class="size-3" /> Used as contractor on the act-->
-<!--                    </span>-->
-                      <UButton v-bind="saveBtn('personal')" size="sm" @click="handleSave" />                  </div>
+                    <UButton v-bind="saveBtn('personal')" size="sm" @click="handleSave" />
+                  </div>
                 </template>
               </CardHeader>
             </template>
@@ -311,13 +302,6 @@
                 </span>
               </div>
               <div class="grow" />
-<!--              <UButton-->
-<!--                :icon="settings.showPreview ? 'i-lucide-eye-off' : 'i-lucide-eye'"-->
-<!--                :label="settings.showPreview ? 'Hide preview' : 'Show preview'"-->
-<!--                color="neutral"-->
-<!--                variant="ghost"-->
-<!--                @click="settings.showPreview = !settings.showPreview"-->
-<!--              />-->
               <UButton icon="i-lucide-file-text" label="Save draft" color="neutral" variant="outline" size="lg"/>
               <UButton
                 icon="i-lucide-download"
@@ -342,8 +326,7 @@
             <div class="rounded-xl bg-neutral-100 ring-1 ring-neutral-200 p-3 overflow-hidden" style="zoom: 0.5;">
               <PdfPreview :data="data" :summary="summary" :currency="settings.currency" :focused-field="focusedField" />
             </div>
-            <div class="mt-3 flex items-center justify-center gap-1.5 text-xs text-neutral-500">
-              <UIcon name="i-lucide-sparkles" class="size-3" /> Preview updates as you type
+            <div class="mt-3 flex items-center justify-center gap-1.5 text-xs text-neutral-500">Preview updates as you type
             </div>
           </div>
         </aside>
@@ -368,8 +351,6 @@ import { fmtMoney, fmtHours, allowOnlyNumeric } from '../utils/formatters.js'
 
 const { data, settings, currencyOptions, vatOptions, summary, completion, updateTask, removeTask, addTask, redistributeHours, saveToStorage, dirty, hasSaved } = useActForm()
 
-// Props for a section's "Save data" button: an active warning button while
-// that section has unsaved changes, otherwise a disabled gray button.
 const saveBtn = (section) =>
   dirty.value[section]
     ? { label: 'Save data', icon: 'i-lucide-save', color: 'warning', variant: 'solid', disabled: false }
@@ -427,7 +408,6 @@ function handleSave() {
 }
 
 function handleCreate() {
-  // The browser's print dialog uses document.title as the default "Save as PDF" filename.
   const prevTitle = document.title
   document.title = `acceptance-act-${data.actNumber || 'draft'}`
   const restore = () => {
@@ -439,7 +419,6 @@ function handleCreate() {
 }
 </script>
 
-<!-- Global (non-scoped) print styles: native browser print → "Save as PDF" -->
 <style>
 @media print {
   @page {
@@ -447,8 +426,6 @@ function handleCreate() {
     margin: 12mm;
   }
 
-  /* Whiten the app/page backgrounds — otherwise the body's gray fill
-     paints any page area not covered by the white document. */
   html,
   body,
   #app,
@@ -457,16 +434,12 @@ function handleCreate() {
     min-height: 0 !important;
   }
 
-  /* Remove the on-screen chrome from layout entirely, so it adds no extra
-     (gray) pages. Also drop any body-level teleported overlays/toasts. */
   #app > .min-h-screen > header,
   #app > .min-h-screen > main,
   body > *:not(#app) {
     display: none !important;
   }
 
-  /* The exported document is now the only flowing content; in normal flow
-     it alone defines the printed page count. */
   #print-root {
     position: static !important;
     inset: auto !important;
@@ -474,7 +447,6 @@ function handleCreate() {
     pointer-events: auto !important;
   }
 
-  /* The on-screen card chrome shouldn't print; let the page own the framing. */
   #print-root .preview-page {
     width: 100% !important;
     max-width: 100% !important;
@@ -483,7 +455,6 @@ function handleCreate() {
     box-shadow: none !important;
   }
 
-  /* Keep background tints (slate-50 rows, indigo total) in the PDF. */
   html,
   body,
   #print-root,
@@ -492,7 +463,6 @@ function handleCreate() {
     print-color-adjust: exact !important;
   }
 
-  /* Multi-page hygiene: don't slice a row, box, or signature across a page break. */
   #print-root ol > li,
   #print-root dl,
   #print-root header,

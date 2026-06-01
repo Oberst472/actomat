@@ -5,7 +5,6 @@
   --font-sans: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  /* Brand — indigo-violet from the design template (#5b5cf0 base) */
   --color-brand-50:  #f6f7ff;
   --color-brand-100: #eef0fe;
   --color-brand-200: #e1e4fc;
@@ -18,7 +17,6 @@
   --color-brand-900: #2e2f9e;
   --color-brand-950: #1c1d6b;
 
-  /* Neutrals — cool slate tuned to the design tokens (page/surface/sunken/border/muted/ink) */
   --color-cool-50:  #fafbfc;
   --color-cool-100: #f6f7f9;
   --color-cool-200: #e4e7ec;

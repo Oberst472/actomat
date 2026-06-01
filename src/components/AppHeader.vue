@@ -10,17 +10,7 @@
         </div>
       </div>
       <div class="flex items-center gap-2">
-        <div class="hidden md:flex items-center gap-2 text-xs text-neutral-500">
-<!--          <UIcon name="i-lucide-check" class="size-3.5" />-->
-<!--          <span>Saved <span class="text-neutral-900">·</span> 2 minutes ago</span>-->
-        </div>
-<!--        <UButton color="neutral" variant="outline" size="xs" class="hidden md:inline-flex">-->
-<!--          <UKbd value="meta" />-->
-<!--          <UKbd value="K" />-->
-          <span v-if="greeting" class="text-xs ml-1 text-neutral-900">{{ greeting }}</span>
-<!--        </UButton>-->
-<!--        <UAvatar :text="initials" size="md" />-->
-
+        <span v-if="greeting" class="text-xs ml-1 text-neutral-900">{{ greeting }}</span>
       </div>
     </div>
   </header>
@@ -38,15 +28,4 @@ const greeting = computed(() => {
   const name = props.userName?.trim()
   return name && name !== 'User' ? `Hello ${name}` : ''
 })
-
-const initials = computed(
-  () =>
-    props.userName
-      .split(' ')
-      .map((s) => s[0])
-      .filter(Boolean)
-      .slice(0, 2)
-      .join('')
-      .toUpperCase() || 'U'
-)
 </script>

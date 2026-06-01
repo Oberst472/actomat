@@ -4,17 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c10adb52-ad92-4128-ad5b-02890c3a7cfe" name="Changes" comment="Remove obsolete design prototypes and clean up header/preview UI">
+    <list default="true" id="c10adb52-ad92-4128-ad5b-02890c3a7cfe" name="Changes" comment="Replace jsPDF/html2canvas with native browser print for PDF export.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/components.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/ActForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ActForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AppHeader.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AppHeader.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/PdfPreview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PdfPreview.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TaskRow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskRow.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/composables/useActForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/composables/useActForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/generatePdf.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +113,7 @@
       <updated>1775664190190</updated>
       <workItem from="1775664191212" duration="2998000" />
       <workItem from="1777963975159" duration="22364000" />
-      <workItem from="1780307175242" duration="9749000" />
+      <workItem from="1780307175242" duration="10869000" />
     </task>
     <task id="LOCAL-00001" summary="Initialize &quot;Facturas&quot; project: add Vue 3 + Vite setup, Nuxt UI plugin, and acceptance act generator components">
       <option name="closed" value="true" />
@@ -165,7 +163,15 @@
       <option name="project" value="LOCAL" />
       <updated>1780308561385</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Replace jsPDF/html2canvas with native browser print for PDF export.">
+      <option name="closed" value="true" />
+      <created>1780319919054</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1780319919054</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,6 +183,7 @@
     <MESSAGE value="Rename project to &quot;aktomat&quot; and add canvas-based PDF export with oklch color resolution" />
     <MESSAGE value="Add oklab color support and fix preview layout with column stacking and zoom" />
     <MESSAGE value="Remove obsolete design prototypes and clean up header/preview UI" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove obsolete design prototypes and clean up header/preview UI" />
+    <MESSAGE value="Replace jsPDF/html2canvas with native browser print for PDF export." />
+    <option name="LAST_COMMIT_MESSAGE" value="Replace jsPDF/html2canvas with native browser print for PDF export." />
   </component>
 </project>

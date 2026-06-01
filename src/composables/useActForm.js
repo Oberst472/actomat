@@ -12,11 +12,7 @@ export function useActForm() {
     actNumber: '3',
     actDate: '2026-04-30',
     agreementDate: '2025-09-01',
-    tasks: [
-      // { id: 'CORE-152', description: 'Designed onboarding flow for new B2B customer segment.', hours: '0' },
-      // { id: 'CORE-184', description: 'Refined dashboard navigation and added breadcrumbs.', hours: '0' },
-      // { id: 'PLAT-21',  description: 'Spec review with platform team; updated component tokens.', hours: '0' }
-    ]
+    tasks: []
   })
 
   const settings = reactive({
@@ -28,8 +24,6 @@ export function useActForm() {
 
   const STORAGE_KEY = 'aktomat:actForm'
 
-  // Which fields belong to each form section (i.e. each "Save data" button).
-  // Lets us flag dirtiness per section so only the edited block lights up.
   const SECTIONS = {
     personal: { data: ['email', 'fullName'] },
     act: { data: ['actNumber', 'actDate', 'agreementDate'] },
@@ -37,11 +31,7 @@ export function useActForm() {
     tasks: { data: ['taskIdPrefix', 'tasks'] }
   }
 
-  // Parsed snapshot of the data+settings currently persisted in localStorage.
-  // Per-section dirtiness compares the live form against this.
   const savedState = ref(null)
-  // Whether the form was ever persisted (storage existed on load, or a save
-  // succeeded). Lets us distinguish "Saved" from "Nothing to save".
   const hasSaved = ref(false)
 
   function snapshot() {
@@ -79,8 +69,6 @@ export function useActForm() {
   }
 
   loadFromStorage()
-  // Baseline: whatever is in the form right after load is considered "saved",
-  // so a section only becomes dirty once the user changes one of its fields.
   savedState.value = snapshot()
 
   const eq = (a, b) => JSON.stringify(a) !== JSON.stringify(b)
@@ -94,7 +82,6 @@ export function useActForm() {
     return false
   }
 
-  // Per-section dirty flags, e.g. dirty.value.personal — drives each button.
   const dirty = computed(() => ({
     personal: sectionDirty('personal'),
     act: sectionDirty('act'),
