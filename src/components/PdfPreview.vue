@@ -90,7 +90,7 @@
         </li>
       </ol>
 
-      <div :class="['mt-5 rounded-xl border border-slate-200 bg-slate-50 px-5 table w-full', hl('hoursPerMonth')]" style="height: 64px;">
+      <div :class="['mt-5 rounded-xl border border-slate-200 bg-slate-50 px-5 table w-full', hl('hours')]" style="height: 64px;">
         <span class="table-cell align-middle text-sm tracking-wide uppercase text-slate-500">Total hours</span>
         <span class="table-cell align-middle text-right text-2xl font-semibold num text-slate-900">{{ fmtHours(summary.hours) }}</span>
       </div>

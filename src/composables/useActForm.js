@@ -1,13 +1,12 @@
 import { reactive, computed, watch, ref } from 'vue'
-import { parseNum } from '../utils/formatters.js'
+import { parseNum, truncateDecimals } from '../utils/formatters.js'
 
 export function useActForm() {
   const data = reactive({
     email: 'anna.kowalska@example.com',
     fullName: 'Anna Kowalska',
     pricePerHour: '92,46',
-    netAmount: '0',
-    hoursPerMonth: 100,
+    netAmount: '9246,00',
     taskIdPrefix: '',
     actNumber: '3',
     actDate: '2026-04-30',
@@ -24,10 +23,16 @@ export function useActForm() {
 
   const STORAGE_KEY = 'aktomat:actForm'
 
+  const HOURS_DECIMALS = 2
+  const HOURS_UNIT = 10 ** HOURS_DECIMALS
+
+  const pick = (src, keys) =>
+    keys.reduce((acc, k) => (k in src ? Object.assign(acc, { [k]: src[k] }) : acc), {})
+
   const SECTIONS = {
     personal: { data: ['email', 'fullName'] },
     act: { data: ['actNumber', 'actDate', 'agreementDate'] },
-    pricing: { data: ['pricePerHour', 'netAmount', 'hoursPerMonth'], settings: ['currency', 'vatRate'] },
+    pricing: { data: ['pricePerHour', 'netAmount'], settings: ['currency', 'vatRate'] },
     tasks: { data: ['taskIdPrefix', 'tasks'] }
   }
 
@@ -48,7 +53,7 @@ export function useActForm() {
       if (!raw) return
       const parsed = JSON.parse(raw)
       if (parsed && typeof parsed === 'object') {
-        if (parsed.data) Object.assign(data, parsed.data)
+        if (parsed.data) Object.assign(data, pick(parsed.data, Object.keys(data)))
         if (parsed.settings) Object.assign(settings, parsed.settings)
         hasSaved.value = true
       }
@@ -69,7 +74,6 @@ export function useActForm() {
   }
 
   loadFromStorage()
-  savedState.value = snapshot()
 
   const eq = (a, b) => JSON.stringify(a) !== JSON.stringify(b)
 
@@ -97,22 +101,27 @@ export function useActForm() {
 
   const vatOptions = [0, 5, 8, 12, 23, 32].map((v) => ({ label: `${v}%`, value: v }))
 
+  const totalHours = computed(() => {
+    const rate = parseNum(data.pricePerHour)
+    const net = parseNum(data.netAmount)
+    if (rate <= 0 || net <= 0) return 0
+    return truncateDecimals(net / rate, HOURS_DECIMALS)
+  })
+
   const summary = computed(() => {
     const rate = parseNum(data.pricePerHour)
-    const taskHours = data.tasks.reduce((s, t) => s + parseNum(t.hours), 0)
-    const hours = taskHours > 0 ? taskHours : parseNum(data.hoursPerMonth)
-    const enteredNet = parseNum(data.netAmount)
-    const net = enteredNet > 0 ? enteredNet : hours * rate
+    const net = parseNum(data.netAmount)
     const vat = net * (settings.vatRate / 100)
-    return { hours, rate, net, vat, total: net + vat, vatRate: settings.vatRate }
+    return { hours: totalHours.value, rate, net, vat, total: net + vat, vatRate: settings.vatRate }
   })
 
   const completion = computed(() => {
-    const total = 5
+    const total = 6
     let filled = 0
     if (data.email) filled++
     if (data.fullName) filled++
-    if (data.pricePerHour) filled++
+    if (parseNum(data.pricePerHour) > 0) filled++
+    if (parseNum(data.netAmount) > 0) filled++
     if (data.actNumber) filled++
     if (data.tasks.some((t) => t.id && t.description && parseNum(t.hours) > 0)) filled++
     return Math.round((filled / total) * 100)
@@ -130,28 +139,67 @@ export function useActForm() {
     redistributeHours()
   }
 
-  function distributeHours(total, n) {
-    if (n <= 0) return []
-    const whole = Math.round(total)
-    if (n === 1) return [whole]
+  // Splits an integer amount into n varied random shares of at least `min`,
+  // adding up to exactly `amount`.
+  function splitAmount(amount, n, min) {
+    const floor = Math.min(min, Math.floor(amount / n))
     const weights = Array.from({ length: n }, () => 0.5 + Math.random())
     const sum = weights.reduce((a, b) => a + b, 0)
-    const hours = weights.map((w) => Math.max(1, Math.round((whole * w) / sum)))
-    const summed = hours.reduce((a, b) => a + b, 0)
-    hours[hours.length - 1] = Math.max(1, hours[hours.length - 1] + (whole - summed))
-    return hours
+    const parts = weights.map((w) => Math.max(floor, Math.floor((amount * w) / sum)))
+
+    let rest = amount - parts.reduce((a, b) => a + b, 0)
+    for (let i = n - 1; rest > 0; i = i === 0 ? n - 1 : i - 1) {
+      parts[i]++
+      rest--
+    }
+    for (let i = n - 1; i >= 0 && rest < 0; i--) {
+      const take = Math.min(-rest, parts[i] - floor)
+      parts[i] -= take
+      rest += take
+    }
+    return parts
   }
 
+  // Splits the derived total across the tasks. Every task gets whole hours and only
+  // the last one carries the leftover fraction, so a single tail row reads like 18,81 h.
+  // Shares always add up to the total exactly (compared in hundredths of an hour).
+  function distributeHours(total, n) {
+    if (n <= 0) return []
+    const units = Math.round(total * HOURS_UNIT)
+    if (units <= 0) return Array.from({ length: n }, () => 0)
+    if (n === 1) return [units / HOURS_UNIT]
+
+    const wholeHours = Math.floor(units / HOURS_UNIT)
+
+    // Fewer whole hours than tasks — one hour each is impossible, so fall back to
+    // splitting the hundredths and accept fractions on every row.
+    if (wholeHours < n) return splitAmount(units, n, 1).map((u) => u / HOURS_UNIT)
+
+    const parts = splitAmount(wholeHours, n, 1).map((h) => h * HOURS_UNIT)
+    parts[n - 1] += units - wholeHours * HOURS_UNIT
+    return parts.map((u) => u / HOURS_UNIT)
+  }
+
+  const hoursToInput = (n) => String(n).replace('.', ',')
+
   function redistributeHours() {
-    const total = parseNum(data.hoursPerMonth)
-    if (!Number.isFinite(total) || total <= 0 || data.tasks.length === 0) return
-    const distributed = distributeHours(total, data.tasks.length)
+    if (data.tasks.length === 0) return
+    const distributed = distributeHours(totalHours.value, data.tasks.length)
     distributed.forEach((h, i) => {
-      data.tasks[i].hours = String(h)
+      data.tasks[i].hours = hoursToInput(h)
     })
   }
 
-  watch(() => data.hoursPerMonth, redistributeHours)
+  watch(totalHours, redistributeHours)
 
-  return { data, settings, currencyOptions, vatOptions, summary, completion, updateTask, removeTask, addTask, redistributeHours, saveToStorage, dirty, hasSaved }
+  // Stored drafts (or drafts saved with a different rate) can hold task hours that
+  // no longer add up to net ÷ rate — realign them before the first snapshot.
+  if (data.tasks.length > 0) {
+    const sum = data.tasks.reduce((s, t) => s + parseNum(t.hours), 0)
+    if (Math.round(sum * HOURS_UNIT) !== Math.round(totalHours.value * HOURS_UNIT)) redistributeHours()
+  }
+
+  savedState.value = snapshot()
+
+  return { data, settings, currencyOptions, vatOptions, totalHours, summary, completion, updateTask, removeTask, addTask, redistributeHours, saveToStorage, dirty, hasSaved }
 }

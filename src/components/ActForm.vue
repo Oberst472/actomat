@@ -158,15 +158,24 @@
                     </template>
                   </UInput>
                 </UFormField>
-                <UFormField label="Hours per month" v-bind="focusBindings('hoursPerMonth')">
-                  <UInputNumber
-                    v-model="data.hoursPerMonth"
+                <UFormField
+                  label="Total hours"
+                  :error="hoursError"
+                  help="Calculated as net amount ÷ price per hour"
+                  v-bind="focusBindings('hours')"
+                >
+                  <UInput
+                    :model-value="fmtHours(summary.hours)"
                     size="xl"
-                    :min="0"
-                    :step="1"
+                    readonly
+                    tabindex="-1"
                     class="w-full"
-                    :ui="{ base: 'text-right tabular-nums font-light' }"
-                  />
+                    :ui="{ base: 'text-right tabular-nums font-light bg-neutral-50 cursor-default' }"
+                  >
+                    <template #trailing>
+                      <span class="text-xs text-neutral-500 font-medium">h</span>
+                    </template>
+                  </UInput>
                 </UFormField>
               </div>
             </div>
@@ -383,6 +392,9 @@ const focusBindings = (key) => ({
 })
 const pricePerHourError = computed(() => numericError(data.pricePerHour))
 const netAmountError = computed(() => numericError(data.netAmount))
+const hoursError = computed(() =>
+  summary.value.hours > 0 ? undefined : 'Enter a price per hour and a net amount above'
+)
 
 const requiredDateError = (v) => (v ? undefined : 'Date is required')
 const actDateError = computed(() => requiredDateError(data.actDate))

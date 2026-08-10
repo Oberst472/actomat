@@ -20,14 +20,13 @@
 
       <UFormField label="Hours" class="w-32 shrink-0">
         <UInput
-          :model-value="task.hours"
+          :model-value="fmtHours(parseNum(task.hours))"
           size="xl"
-          inputmode="decimal"
-          placeholder="0,0"
+          readonly
+          tabindex="-1"
+          title="Auto-distributed from net amount ÷ price per hour"
           class="w-full"
-          :ui="{ base: 'text-right tabular-nums font-light' }"
-          @beforeinput="allowOnlyNumeric"
-          @update:model-value="(v) => update('hours', v)"
+          :ui="{ base: 'text-right tabular-nums font-light bg-neutral-50 cursor-default' }"
         >
           <template #trailing>
             <span class="text-xs text-neutral-500 font-medium">h</span>
@@ -61,7 +60,7 @@
 </template>
 
 <script setup>
-import { allowOnlyNumeric } from '../utils/formatters.js'
+import { fmtHours, parseNum } from '../utils/formatters.js'
 
 const props = defineProps({
   task: { type: Object, required: true },
